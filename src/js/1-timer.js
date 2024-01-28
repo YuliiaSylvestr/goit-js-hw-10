@@ -74,10 +74,11 @@ const options = {
         icon: '',
       });
       refs.startButton.setAttribute('disabled', true);
+      userSelectedDate = null;
     } else {
       refs.startButton.removeAttribute('disabled');
+      userSelectedDate = selectedDate;
     }
-    userSelectedDate = selectedDate;
   },
 };
 

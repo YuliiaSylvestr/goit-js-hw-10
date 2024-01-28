@@ -17,33 +17,35 @@ refs.form.addEventListener('submit', e => {
   }
   const promiseValue = promiseCheckedRadio.value;
   new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (promiseValue === 'fulfilled') {
-        resolve();
-      } else if (promiseValue === 'rejected') {
-        reject();
-      }
-    }, delayValue);
+    if (promiseValue === 'fulfilled') {
+      resolve(delayValue);
+    } else if (promiseValue === 'rejected') {
+      reject(delayValue);
+    }
   })
-    .then(() => {
-      iziToast.success({
-        title: `✅ Fulfilled promise in ${delayValue}ms`,
-        position: 'topRight',
-        titleColor: 'white',
-        backgroundColor: '#1ee624',
-        progressBar: false,
-        icon: '',
-      });
+    .then(value => {
+      setTimeout(() => {
+        iziToast.success({
+          title: `✅ Fulfilled promise in ${value}ms`,
+          position: 'topRight',
+          titleColor: 'white',
+          backgroundColor: '#1ee624',
+          progressBar: false,
+          icon: '',
+        });
+      }, value);
     })
-    .catch(() => {
-      iziToast.error({
-        title: `❌ Rejected promise in ${delayValue}ms`,
-        position: 'topRight',
-        backgroundColor: '#f53d3d',
-        titleColor: 'white',
-        progressBar: false,
-        icon: '',
-      });
+    .catch(value => {
+      setTimeout(() => {
+        iziToast.error({
+          title: `❌ Rejected promise in ${value}ms`,
+          position: 'topRight',
+          backgroundColor: '#f53d3d',
+          titleColor: 'white',
+          progressBar: false,
+          icon: '',
+        });
+      }, value);
     });
   e.currentTarget.reset();
 });
